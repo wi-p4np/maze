@@ -31,5 +31,8 @@ You should always update your repository before you start working!
 
 
 ## Authors
-@heolin123
-@dennise909
+- @heolin123
+- @dennise909
+- @myriam-lp
+- @elena-gre
+- @ilaria-neg
