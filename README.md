@@ -34,6 +34,8 @@ Your changes
  ```
 5.  Delete the conflict markers `<<<<<<<`, `=======`, `>>>>>>>` and make the changes you want in the final merge.
 For example: leave only `Your changes` and delete other text and all `>`, `=` and `<`.
+6. You need to add those modified files using `git add <file_name`.
+7. Then you can commit the merge typing `git commit` it will automatically create a commit message.
 
 ### How can I start working on new task (creating a branch)
 1. Start with creating a new branch for your task
