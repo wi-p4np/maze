@@ -4,7 +4,8 @@ from game_input import get_key
 NOTHING = "0"
 WALL = "1"
 PLAYER = "2"
-SCORE = "3"
+SCORE_1 = "3"
+SCORE_5 = "4"
 START = "S"
 END = "E"
 
@@ -12,7 +13,8 @@ character_mapping = {
     NOTHING: " ",
     WALL: "#",
     PLAYER: "O",
-    SCORE: "$",
+    SCORE_1: "$",
+    SCORE_5: "€",
     START: "S",
     END: "⚑"
 }
@@ -57,8 +59,10 @@ def move_player(move_x, move_y):
     new_y = game['y'] + move_y
 
     if game_map[new_x][new_y] != WALL:
-        if game_map[new_x][new_y] == SCORE:
+        if game_map[new_x][new_y] == SCORE_1:
            game["scores"] += 1
+        if game_map[new_x][new_y] == SCORE_5:
+           game["scores"] += 5
         if game_map[new_x][new_y] == END:
            game["finished"] = True
 
