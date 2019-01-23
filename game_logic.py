@@ -32,12 +32,15 @@ game = {
 def read_map(file_name):
     lines = open(file_name).read().split('\n')
     raw_map = []
-    for line in lines:
-        row = []
-        for c in line:
-            row.append(c)
-        if len(row) > 1:
-            raw_map.append(row)
+    for r, line in enumerate(lines):
+       row = []
+       for c, col in enumerate(line):
+           row.append(col)
+           if col == START:
+            game['x'] = r
+            game['y'] = c
+       if len(row) > 1:
+           raw_map.append(row)
     return raw_map
 
 
