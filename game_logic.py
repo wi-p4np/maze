@@ -8,6 +8,7 @@ SCORE_1 = "3"
 SCORE_5 = "4"
 START = "S"
 END = "E"
+POINTS_TRAP = "T"
 
 character_mapping = {
     NOTHING: " ",
@@ -15,6 +16,7 @@ character_mapping = {
     PLAYER: "O",
     SCORE_1: "$",
     SCORE_5: "€",
+    POINTS_TRAP: "T",
     START: "S",
     END: "⚑"
 }
@@ -63,6 +65,10 @@ def move_player(move_x, move_y):
            game["scores"] += 1
         if game_map[new_x][new_y] == SCORE_5:
            game["scores"] += 5
+        if game_map[new_x][new_y] == POINTS_TRAP:
+            game["scores"] -= 1
+            if game["scores"] < 0:
+                game["scores"] == 0
         if game_map[new_x][new_y] == END:
            game["finished"] = True
 
