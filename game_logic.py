@@ -9,6 +9,9 @@ SCORE_5 = "4"
 START = "S"
 END = "E"
 POINTS_TRAP = "T"
+KEY = "K"
+DOORS = "D"
+
 
 character_mapping = {
     NOTHING: " ",
@@ -18,7 +21,9 @@ character_mapping = {
     SCORE_5: "€",
     POINTS_TRAP: "T",
     START: "S",
-    END: "⚑"
+    END: "⚑", 
+    KEY: "⚷",
+    DOORS: "■"
 }
 
 
@@ -28,6 +33,8 @@ game = {
     "map": "",
     "x": 1,
     "y": 1,
+    "door_x": None,
+    "door_y": None
 }
 
 
@@ -35,13 +42,16 @@ def read_map(file_name):
     lines = open(file_name).read().split('\n')
     raw_map = []
     for r, line in enumerate(lines):
-       row = []
-       for c, col in enumerate(line):
+        row = []
+        for c, col in enumerate(line):
            row.append(col)
            if col == START:
             game['x'] = r
             game['y'] = c
-       if len(row) > 1:
+        if col == DOORS:
+                game["door_x"] = r
+                game["door_y"] = c
+        if len(row) > 1:
            raw_map.append(row)
     return raw_map
 
@@ -71,9 +81,11 @@ def move_player(move_x, move_y):
         if game_map[new_x][new_y] == POINTS_TRAP:
             game["scores"] -= 1
             if game["scores"] < 0:
-                game["scores"] == 0
+                game["scores"] = 0
+        if game_map[new_x][new_y] == KEY:
+            game_map[door_x][door_y] = NOTHING
         if game_map[new_x][new_y] == END:
-           game["finished"] = True
+            game["finished"] = True
 
         game_map[game['x']][game['y']] = NOTHING
         game['x'] += move_x
