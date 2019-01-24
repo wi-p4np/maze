@@ -1,3 +1,5 @@
+from colorama import init
+init()
 import os
 from game_logic import start_game
 import utils
