@@ -57,7 +57,7 @@ For example: `git checkout -b adding_new_magic_spells`
 - If you want to add just selected files, use `git add <file_path>` for each file
 5. Create a commit. Type `git commit`
 6. Type commit message explaining your changes and save.
-7. Push your commit to master. Type: `git push origin master`.
+7. Push your commit to your branch. Type: `git push origin <name_of_your_branch>`.
 
 
 ### How can I merge my changes with master?
