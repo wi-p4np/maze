@@ -9,16 +9,22 @@ SCORE_5 = "4"
 START = "S"
 END = "E"
 POINTS_TRAP = "T"
+WALL_3 = "C"
+WALL_2 = "B"
+WALL_1 = "A"
 
 character_mapping = {
     NOTHING: " ",
-    WALL: "#",
+    WALL: "▇",
     PLAYER: "O",
     SCORE_1: "$",
     SCORE_5: "€",
     POINTS_TRAP: "T",
     START: "S",
-    END: "⚑"
+    END: "⚑",
+    WALL_3: "▓",
+    WALL_2: "▒",
+    WALL_1: "░"
 }
 
 
@@ -63,11 +69,11 @@ def move_player(move_x, move_y):
     new_x = game['x'] + move_x
     new_y = game['y'] + move_y
 
-    if game_map[new_x][new_y] != WALL:
+    if game_map[new_x][new_y] not in (WALL, WALL_1, WALL_2, WALL_3):
         if game_map[new_x][new_y] == SCORE_1:
-           game["scores"] += 1
+            game["scores"] += 1
         if game_map[new_x][new_y] == SCORE_5:
-           game["scores"] += 5
+            game["scores"] += 5
         if game_map[new_x][new_y] == POINTS_TRAP:
             game["scores"] -= 1
             if game["scores"] < 0:
@@ -79,6 +85,15 @@ def move_player(move_x, move_y):
         game['x'] += move_x
         game['y'] += move_y
         game_map[game['x']][game['y']] = PLAYER
+
+    if game_map[new_x][new_y] == WALL_1:
+        game_map[new_x][new_y] = NOTHING
+
+    if game_map[new_x][new_y] == WALL_2:
+        game_map[new_x][new_y] = WALL_1
+
+    if game_map[new_x][new_y] == WALL_3:
+        game_map[new_x][new_y] = WALL_2
 
 
 def handle_input():
