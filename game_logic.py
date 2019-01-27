@@ -14,7 +14,7 @@ WALL_3 = "C"
 WALL_2 = "B"
 WALL_1 = "A"
 KEY = "K"
-DOORS = "D"
+DOOR = "D"
 
 colors_mapping = {
     WALL: Fore.YELLOW,
@@ -37,7 +37,11 @@ character_mapping = {
     WALL_2: "▒",
     WALL_1: "░",
     KEY: "⚷",
+<<<<<<< HEAD
     DOORS: "▪"
+=======
+    DOOR: "■"
+>>>>>>> Added key and door to game logic and modified map3
 }
 
 
@@ -58,11 +62,11 @@ def read_map(file_name):
     for r, line in enumerate(lines):
         row = []
         for c, col in enumerate(line):
-           row.append(col)
-           if col == START:
-            game['x'] = r
-            game['y'] = c
-        if col == DOORS:
+            row.append(col)
+            if col == START:
+                game['x'] = r
+                game['y'] = c
+            if col == DOOR:
                 game["door_x"] = r
                 game["door_y"] = c
         if len(row) > 1:
@@ -89,6 +93,7 @@ def move_player(move_x, move_y):
     new_x = game['x'] + move_x
     new_y = game['y'] + move_y
 
+<<<<<<< HEAD
     if game_map[new_x][new_y] not in (WALL, WALL_1, WALL_2, WALL_3):
         if game_map[new_x][new_y] == SCORE_1:
             game["scores"] += 1
@@ -107,6 +112,27 @@ def move_player(move_x, move_y):
         game['x'] += move_x
         game['y'] += move_y
         game_map[game['x']][game['y']] = PLAYER
+=======
+    if game_map[new_x][new_y] != WALL:
+        if game_map[new_x][new_y] != DOOR:
+            if game_map[new_x][new_y] == SCORE_1:
+               game["scores"] += 1
+            if game_map[new_x][new_y] == SCORE_5:
+               game["scores"] += 5
+            if game_map[new_x][new_y] == POINTS_TRAP:
+                game["scores"] -= 1
+                if game["scores"] < 0:
+                    game["scores"] = 0
+            if game_map[new_x][new_y] == KEY:
+                game_map[game["door_x"]][game["door_y"]] = NOTHING
+            if game_map[new_x][new_y] == END:
+                game["finished"] = True
+
+            game_map[game['x']][game['y']] = NOTHING
+            game['x'] += move_x
+            game['y'] += move_y
+            game_map[game['x']][game['y']] = PLAYER
+>>>>>>> Added key and door to game logic and modified map3
 
     if game_map[new_x][new_y] == WALL_1:
         game_map[new_x][new_y] = NOTHING
