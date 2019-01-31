@@ -17,14 +17,21 @@ def main():
         for i in range(len(maps)):
             name = maps[i]
             print(i, "-", name[:-4])
+        print("EXIT - exit the game")
 
         print()
-        print("Which map do you want?")
-        map_index = int(input())
+        print("Which option do you want?")
+        selected_value = input()
+    
+        try:
+            map_index = int(selected_value)
+            file_path = "./maps/" + maps[map_index]
+            start_game(file_path)   
+        except ValueError:
+            pass
 
-        file_path = "./maps/" + maps[map_index]
-
-        start_game(file_path)
+        if selected_value == 'EXIT':
+            break
 
 
 if __name__ == '__main__':
