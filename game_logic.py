@@ -37,7 +37,6 @@ character_mapping = {
     WALL_1: "░",
     KEY: "⚷",
     DOOR: "▪"
-    END: "⚑", 
 }
 
 
