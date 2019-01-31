@@ -1,3 +1,4 @@
+from colorama import Fore
 from utils import clear
 from game_input import get_key
 
@@ -12,6 +13,13 @@ POINTS_TRAP = "T"
 WALL_3 = "C"
 WALL_2 = "B"
 WALL_1 = "A"
+
+colors_mapping = {
+    WALL: Fore.YELLOW,
+    SCORE_1: Fore.GREEN,
+    SCORE_5: Fore.CYAN,
+    END: Fore.RED
+}
 
 character_mapping = {
     NOTHING: " ",
@@ -58,9 +66,11 @@ def print_map():
     print("Scores:", game["scores"])
     for line in game["map"]:
         for c in line:
+            color = colors_mapping.get(c, Fore.RESET)
             map_c = character_mapping[c]
-            print(map_c, end="")
+            print(color + map_c, end="")
         print()
+    print(Fore.RESET)
 
 
 def move_player(move_x, move_y):
