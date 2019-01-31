@@ -37,11 +37,7 @@ character_mapping = {
     WALL_2: "▒",
     WALL_1: "░",
     KEY: "⚷",
-<<<<<<< HEAD
-    DOORS: "▪"
-=======
-    DOOR: "■"
->>>>>>> Added key and door to game logic and modified map3
+    DOOR: "▪"
 }
 
 
@@ -93,8 +89,7 @@ def move_player(move_x, move_y):
     new_x = game['x'] + move_x
     new_y = game['y'] + move_y
 
-<<<<<<< HEAD
-    if game_map[new_x][new_y] not in (WALL, WALL_1, WALL_2, WALL_3):
+    if game_map[new_x][new_y] not in (WALL, WALL_1, WALL_2, WALL_3, DOOR):
         if game_map[new_x][new_y] == SCORE_1:
             game["scores"] += 1
         if game_map[new_x][new_y] == SCORE_5:
@@ -104,7 +99,7 @@ def move_player(move_x, move_y):
             if game["scores"] < 0:
                 game["scores"] = 0
         if game_map[new_x][new_y] == KEY:
-            game_map[door_x][door_y] = NOTHING
+            game_map[game["door_x"]][game["door_y"]] = NOTHING
         if game_map[new_x][new_y] == END:
             game["finished"] = True
 
@@ -112,27 +107,6 @@ def move_player(move_x, move_y):
         game['x'] += move_x
         game['y'] += move_y
         game_map[game['x']][game['y']] = PLAYER
-=======
-    if game_map[new_x][new_y] != WALL:
-        if game_map[new_x][new_y] != DOOR:
-            if game_map[new_x][new_y] == SCORE_1:
-               game["scores"] += 1
-            if game_map[new_x][new_y] == SCORE_5:
-               game["scores"] += 5
-            if game_map[new_x][new_y] == POINTS_TRAP:
-                game["scores"] -= 1
-                if game["scores"] < 0:
-                    game["scores"] = 0
-            if game_map[new_x][new_y] == KEY:
-                game_map[game["door_x"]][game["door_y"]] = NOTHING
-            if game_map[new_x][new_y] == END:
-                game["finished"] = True
-
-            game_map[game['x']][game['y']] = NOTHING
-            game['x'] += move_x
-            game['y'] += move_y
-            game_map[game['x']][game['y']] = PLAYER
->>>>>>> Added key and door to game logic and modified map3
 
     if game_map[new_x][new_y] == WALL_1:
         game_map[new_x][new_y] = NOTHING
