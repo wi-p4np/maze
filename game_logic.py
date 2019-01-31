@@ -23,7 +23,6 @@ colors_mapping = {
     END: Fore.RED
 }
 
-
 character_mapping = {
     NOTHING: " ",
     WALL: "▇",
@@ -38,6 +37,7 @@ character_mapping = {
     WALL_1: "░",
     KEY: "⚷",
     DOOR: "▪"
+    END: "⚑", 
 }
 
 
