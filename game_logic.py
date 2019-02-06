@@ -137,10 +137,12 @@ def start_game(file_name):
     game["x"] = 1
     game["y"] = 1
     game["finished"] = False
+    game["scores"] = 0
     game["map"] = read_map(file_name)
 
     while not game["finished"]:
         print_map()
         result = handle_input()
-        if result == False:
-            break
+        if not result:
+            return None
+    return game["scores"]
