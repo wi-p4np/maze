@@ -155,6 +155,7 @@ def start_game(file_name):
     game["x"] = 1
     game["y"] = 1
     game["finished"] = False
+    game["scores"] = 0
     game["map"] = read_map(file_name)
     game["original_map"] = copy.deepcopy(game["map"])
 
@@ -162,6 +163,6 @@ def start_game(file_name):
         print_map()
         result = handle_input()
         if not result:
-            break
-
+            return None
+    return game["scores"]
 
