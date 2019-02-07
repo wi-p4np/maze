@@ -24,14 +24,14 @@ def main():
         #print()
         print("Which option do you want?")
         selected_value = input()
-    
+  
         try:
             map_index = int(selected_value)
             file_path = "./maps/" + maps[map_index]
             score = start_game(file_path)  
             if score:
                 highscore = add_highscore(maps[map_index][:-4], score)
-            print(highscore) 
+                print(highscore) 
         except ValueError:
             pass
 
