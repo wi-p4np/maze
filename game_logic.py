@@ -1,6 +1,7 @@
 from colorama import Fore
 from utils import clear
 from game_input import get_key
+import copy
 
 NOTHING = "0"
 WALL = "1"
@@ -15,6 +16,7 @@ WALL_2 = "B"
 WALL_1 = "A"
 KEY = "K"
 DOOR = "D"
+
 
 colors_mapping = {
     WALL: Fore.YELLOW,
@@ -44,11 +46,17 @@ game = {
     "finished": False,
     "scores": 0,
     "map": "",
+    "original_map": "",
     "x": 1,
     "y": 1,
     "door_x": None,
     "door_y": None
 }
+
+
+REAPPEARING_BLOCKS = [
+    POINTS_TRAP
+]
 
 
 def read_map(file_name):
@@ -65,7 +73,7 @@ def read_map(file_name):
                 game["door_x"] = r
                 game["door_y"] = c
         if len(row) > 1:
-           raw_map.append(row)
+            raw_map.append(row)
     return raw_map
 
 
@@ -84,9 +92,12 @@ def print_map():
 
 def move_player(move_x, move_y):
     game_map = game["map"]
+    original_map = game["original_map"]
 
-    new_x = game['x'] + move_x
-    new_y = game['y'] + move_y
+    x = game['x']
+    y = game['y']
+    new_x = x + move_x
+    new_y = y + move_y
 
     if game_map[new_x][new_y] not in (WALL, WALL_1, WALL_2, WALL_3, DOOR):
         if game_map[new_x][new_y] == SCORE_1:
@@ -102,10 +113,17 @@ def move_player(move_x, move_y):
         if game_map[new_x][new_y] == END:
             game["finished"] = True
 
-        game_map[game['x']][game['y']] = NOTHING
-        game['x'] += move_x
-        game['y'] += move_y
-        game_map[game['x']][game['y']] = PLAYER
+        if original_map[x][y] in REAPPEARING_BLOCKS:
+            game_map[x][y] = original_map[x][y]
+        else:
+            game_map[x][y] = NOTHING
+
+        x = new_x
+        y = new_y
+        game_map[x][y] = PLAYER
+
+        game["x"] = new_x
+        game["y"] = new_y
 
     if game_map[new_x][new_y] == WALL_1:
         game_map[new_x][new_y] = NOTHING
@@ -138,9 +156,12 @@ def start_game(file_name):
     game["y"] = 1
     game["finished"] = False
     game["map"] = read_map(file_name)
+    game["original_map"] = copy.deepcopy(game["map"])
 
     while not game["finished"]:
         print_map()
         result = handle_input()
-        if result == False:
+        if not result:
             break
+
+
