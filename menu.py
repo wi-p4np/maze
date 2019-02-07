@@ -1,15 +1,17 @@
-from colorama import init
-init()
 import os
-from game_logic import start_game
 import utils
-
+from colorama import init
+from game_logic import start_game
+from high_score import add_highscore
+from high_score import print_highscore
+init()
 
 def main():
     maps = os.listdir("./maps")
 
     while True:
         utils.clear()
+        print_highscore()
 
         print("  MENU")
         print("********")
@@ -19,14 +21,17 @@ def main():
             print(i, "-", name[:-4])
         print("EXIT - exit the game")
 
-        print()
+        #print()
         print("Which option do you want?")
         selected_value = input()
-    
+  
         try:
             map_index = int(selected_value)
             file_path = "./maps/" + maps[map_index]
-            start_game(file_path)   
+            score = start_game(file_path)  
+            if score:
+                highscore = add_highscore(maps[map_index][:-4], score)
+                print(highscore) 
         except ValueError:
             pass
 
