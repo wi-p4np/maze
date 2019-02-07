@@ -15,6 +15,7 @@ WALL_2 = "B"
 WALL_1 = "A"
 KEY = "K"
 DOOR = "D"
+CRATE = "Q"
 
 colors_mapping = {
     WALL: Fore.YELLOW,
@@ -36,7 +37,8 @@ character_mapping = {
     WALL_2: "▒",
     WALL_1: "░",
     KEY: "⚷",
-    DOOR: "▪"
+    DOOR: "▪",
+    CRATE: "⧈"
 }
 
 
@@ -88,7 +90,13 @@ def move_player(move_x, move_y):
     new_x = game['x'] + move_x
     new_y = game['y'] + move_y
 
-    if game_map[new_x][new_y] not in (WALL, WALL_1, WALL_2, WALL_3, DOOR):
+    if game_map[new_x][new_y] == CRATE:
+        if game_map[new_x + move_x][new_y + move_y]==NOTHING:
+            game_map[new_x + move_x][new_y + move_y] = CRATE
+            game_map[new_x][new_y] = NOTHING
+
+
+    if game_map[new_x][new_y] not in (CRATE, WALL, WALL_1, WALL_2, WALL_3, DOOR):
         if game_map[new_x][new_y] == SCORE_1:
             game["scores"] += 1
         if game_map[new_x][new_y] == SCORE_5:
