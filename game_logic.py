@@ -16,6 +16,7 @@ WALL_2 = "B"
 WALL_1 = "A"
 KEY = "K"
 DOOR = "D"
+PRESSURE_PLATE = "P"
 
 
 colors_mapping = {
@@ -38,7 +39,8 @@ character_mapping = {
     WALL_2: "▒",
     WALL_1: "░",
     KEY: "⚷",
-    DOOR: "▪"
+    DOOR: "▪",
+    PRESSURE_PLATE: "P"
 }
 
 
@@ -50,7 +52,8 @@ game = {
     "x": 1,
     "y": 1,
     "door_x": None,
-    "door_y": None
+    "door_y": None,
+    "timer": 0
 }
 
 
@@ -110,6 +113,16 @@ def move_player(move_x, move_y):
                 game["scores"] = 0
         if game_map[new_x][new_y] == KEY:
             game_map[game["door_x"]][game["door_y"]] = NOTHING
+
+        if game_map[new_x][new_y] == PRESSURE_PLATE:
+            game["timer"] = 10
+            game_map[game["door_x"]][game["door_y"]] = NOTHING
+
+        if game["timer"] > 0:
+            game["timer"] -= 1
+            if game["timer"] == 0:
+                game_map[game["door_x"]][game["door_y"]] = DOOR
+
         if game_map[new_x][new_y] == END:
             game["finished"] = True
 
@@ -154,8 +167,8 @@ def handle_input():
 def start_game(file_name):
     game["x"] = 1
     game["y"] = 1
+    game["timer"] = 0
     game["finished"] = False
-    game["scores"] = 0
     game["map"] = read_map(file_name)
     game["original_map"] = copy.deepcopy(game["map"])
 
@@ -163,6 +176,20 @@ def start_game(file_name):
         print_map()
         result = handle_input()
         if not result:
-            return None
-    return game["scores"]
+            break
+
+
+
+def start_game(file_name):
+    game["x"] = 1
+    game["y"] = 1
+    game["finished"] = False
+    game["map"] = read_map(file_name)
+    game["original_map"] = copy.deepcopy(game["map"])
+
+    while not game["finished"]:
+        print_map()
+        result = handle_input()
+        if not result:
+            break
 
