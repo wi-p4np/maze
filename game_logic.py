@@ -17,6 +17,7 @@ WALL_1 = "A"
 KEY = "K"
 DOOR = "D"
 CRATE = "Q"
+LIFE = "L"
 
 
 colors_mapping = {
@@ -40,7 +41,8 @@ character_mapping = {
     WALL_1: "░",
     KEY: "⚷",
     DOOR: "▪",
-    CRATE: "⧈"
+    CRATE: "⧈",
+    LIFE: "♥"
 }
 
 
@@ -52,7 +54,8 @@ game = {
     "x": 1,
     "y": 1,
     "door_x": None,
-    "door_y": None
+    "door_y": None,
+    "lives": 3
 }
 
 
@@ -83,6 +86,7 @@ def print_map():
     """Cleans the map and prints current map on the screen."""
     clear()
     print("Scores:", game["scores"])
+    print("Lives", game["lives"])
     for line in game["map"]:
         for c in line:
             color = colors_mapping.get(c, Fore.RESET)
@@ -114,11 +118,18 @@ def move_player(move_x, move_y):
             game["scores"] += 5
         if game_map[new_x][new_y] == POINTS_TRAP:
             game["scores"] -= 1
+            game["lives"] -= 1
             if game["scores"] < 0:
                 game["scores"] = 0
+        if game_map[new_x][new_y] == LIFE:
+            game["lives"] += 1
+            if game["lives"] > 3:
+                game["lives"] = 3
+            if game["lives"] < 0:
+                game["lives"] = 0
         if game_map[new_x][new_y] == KEY:
             game_map[game["door_x"]][game["door_y"]] = NOTHING
-        if game_map[new_x][new_y] == END:
+        if game_map[new_x][new_y] == END or game["lives"] == 0:
             game["finished"] = True
 
         if original_map[x][y] in REAPPEARING_BLOCKS:
