@@ -24,6 +24,7 @@ colors_mapping = {
     WALL: Fore.YELLOW,
     SCORE_1: Fore.GREEN,
     SCORE_5: Fore.CYAN,
+    LIFE: Fore.MAGENTA,
     END: Fore.RED
 }
 
