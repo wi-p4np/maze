@@ -17,6 +17,8 @@ WALL_1 = "A"
 KEY = "K"
 DOOR = "D"
 CRATE = "Q"
+ARROW_RIGHT = "R"
+ARROW_LEFT = "L"
 
 
 colors_mapping = {
@@ -40,7 +42,9 @@ character_mapping = {
     WALL_1: "░",
     KEY: "⚷",
     DOOR: "▪",
-    CRATE: "⧈"
+    CRATE: "⧈",
+    ARROW_RIGHT: "»",
+    ARROW_LEFT: "«"
 }
 
 
@@ -101,6 +105,8 @@ def move_player(move_x, move_y):
     new_x = x + move_x
     new_y = y + move_y
 
+    
+
     if game_map[new_x][new_y] == CRATE:
         if game_map[new_x + move_x][new_y + move_y]==NOTHING:
             game_map[new_x + move_x][new_y + move_y] = CRATE
@@ -108,6 +114,10 @@ def move_player(move_x, move_y):
 
 
     if game_map[new_x][new_y] not in (CRATE, WALL, WALL_1, WALL_2, WALL_3, DOOR):
+        while game_map[new_x][new_y] == ARROW_RIGHT:
+            new_y = new_y + 1
+        while game_map[new_x][new_y] == ARROW_LEFT:
+            new_y = new_y - 1
         if game_map[new_x][new_y] == SCORE_1:
             game["scores"] += 1
         if game_map[new_x][new_y] == SCORE_5:
@@ -120,11 +130,14 @@ def move_player(move_x, move_y):
             game_map[game["door_x"]][game["door_y"]] = NOTHING
         if game_map[new_x][new_y] == END:
             game["finished"] = True
+        
+
 
         if original_map[x][y] in REAPPEARING_BLOCKS:
             game_map[x][y] = original_map[x][y]
         else:
             game_map[x][y] = NOTHING
+
 
         x = new_x
         y = new_y
