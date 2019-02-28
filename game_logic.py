@@ -16,8 +16,11 @@ WALL_2 = "B"
 WALL_1 = "A"
 KEY = "K"
 DOOR = "D"
+PRESSURE_PLATE = "P"
 CRATE = "Q"
 LIFE = "L"
+ARROW_RIGHT = "R"
+ARROW_LEFT = "L"
 
 
 colors_mapping = {
@@ -44,6 +47,11 @@ character_mapping = {
     DOOR: "▪",
     CRATE: "⧈",
     LIFE: "♥"
+    PRESSURE_PLATE: "P"
+    CRATE: "⧈"
+    CRATE: "⧈",
+    ARROW_RIGHT: "»",
+    ARROW_LEFT: "«"
 }
 
 
@@ -57,11 +65,13 @@ game = {
     "door_x": None,
     "door_y": None,
     "lives": 3
+    "timer": 0
 }
 
 
 REAPPEARING_BLOCKS = [
-    POINTS_TRAP
+    POINTS_TRAP,
+    PRESSURE_PLATE
 ]
 
 
@@ -104,15 +114,18 @@ def move_player(move_x, move_y):
     x = game['x']
     y = game['y']
     new_x = x + move_x
-    new_y = y + move_y
+    new_y = y + move_y    
 
     if game_map[new_x][new_y] == CRATE:
         if game_map[new_x + move_x][new_y + move_y]==NOTHING:
             game_map[new_x + move_x][new_y + move_y] = CRATE
             game_map[new_x][new_y] = NOTHING
 
-
     if game_map[new_x][new_y] not in (CRATE, WALL, WALL_1, WALL_2, WALL_3, DOOR):
+        while game_map[new_x][new_y] == ARROW_RIGHT:
+            new_y = new_y + 1
+        while game_map[new_x][new_y] == ARROW_LEFT:
+            new_y = new_y - 1
         if game_map[new_x][new_y] == SCORE_1:
             game["scores"] += 1
         if game_map[new_x][new_y] == SCORE_5:
@@ -132,7 +145,19 @@ def move_player(move_x, move_y):
             game_map[game["door_x"]][game["door_y"]] = NOTHING
         if game_map[new_x][new_y] == END or game["lives"] == 0:
             game["finished"] = True
+          
+        if game_map[new_x][new_y] == PRESSURE_PLATE:
+            game["timer"] = 10
+            game_map[game["door_x"]][game["door_y"]] = NOTHING
 
+        if game["timer"] > 0:
+            game["timer"] -= 1
+            if game["timer"] == 0:
+                game_map[game["door_x"]][game["door_y"]] = DOOR
+
+        if game_map[new_x][new_y] == END:
+            game["finished"] = True
+            
         if original_map[x][y] in REAPPEARING_BLOCKS:
             game_map[x][y] = original_map[x][y]
         else:
@@ -174,9 +199,25 @@ def handle_input():
 def start_game(file_name):
     game["x"] = 1
     game["y"] = 1
+    game["timer"] = 0
+    game["finished"] = False
+    game["map"] = read_map(file_name)
+    game["original_map"] = copy.deepcopy(game["map"])
+
+    while not game["finished"]:
+        print_map()
+        result = handle_input()
+        if not result:
+            break
+
+
+
+def start_game(file_name):
+    game["x"] = 1
+    game["y"] = 1
     game["finished"] = False
     game["scores"] = 0
-    game["lives"] = 0
+    game["lives"] = 3
     game["map"] = read_map(file_name)
     game["original_map"] = copy.deepcopy(game["map"])
 
