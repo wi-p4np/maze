@@ -58,7 +58,8 @@ game = {
 
 
 REAPPEARING_BLOCKS = [
-    POINTS_TRAP
+    POINTS_TRAP,
+    PRESSURE_PLATE
 ]
 
 
