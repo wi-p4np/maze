@@ -1,15 +1,13 @@
 from datetime import datetime
 highscore_list = []
-highscore = []
 HIGHSCORE_BOARD = './highscore_board.csv'
 
 
 def add_highscore(map_name, score):
-    global highscore
     highscore = tuple([map_name, str(datetime.now().date()), score])
     highscore_list.append(highscore)
     highscore_list.sort(key=lambda x: x[2], reverse=True)
-    save_highscore()
+    save_highscore(highscore)
     return highscore_list
 
 
@@ -20,8 +18,7 @@ def print_highscore():
               ' | ' + 'score: ' + str(i[2]))
 
 
-def save_highscore():
-    global highscore
+def save_highscore(highscore):
     file = open(HIGHSCORE_BOARD, 'a')
     file.write(str(highscore[0]) + ',' + str(highscore[1]) + ',' +
                str(highscore[2]) + '\n')
@@ -37,4 +34,3 @@ def read_highscore():
         highscore_list.append(highscore)
         highscore_list.sort(key=lambda x: x[2], reverse=True)
     return highscore_list
-
