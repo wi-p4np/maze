@@ -46,9 +46,9 @@ character_mapping = {
     KEY: "⚷",
     DOOR: "▪",
     CRATE: "⧈",
-    LIFE: "♥"
-    PRESSURE_PLATE: "P"
-    CRATE: "⧈"
+    LIFE: "♥",
+    PRESSURE_PLATE: "P",
+    CRATE: "⧈",
     CRATE: "⧈",
     ARROW_RIGHT: "»",
     ARROW_LEFT: "«"
@@ -64,7 +64,7 @@ game = {
     "y": 1,
     "door_x": None,
     "door_y": None,
-    "lives": 3
+    "lives": 3,
     "timer": 0
 }
 
