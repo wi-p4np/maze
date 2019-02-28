@@ -2,9 +2,12 @@ import os
 import utils
 from colorama import init
 from game_logic import start_game
-from high_score import add_highscore
-from high_score import print_highscore
+from high_score import (
+    add_highscore, print_highscore, read_highscore
+)
 init()
+read_highscore()
+
 
 def main():
     maps = os.listdir("./maps")
